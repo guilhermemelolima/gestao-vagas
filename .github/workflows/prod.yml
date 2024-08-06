@@ -15,3 +15,11 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '21'
+      - name: Build project
+        run: mvn clean install
+      - name: Login docker
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -P ${{secrets.DOCKER_PASSWORD}}
+      - name: Build docker imagem
+        run: docker build -t guilhermemelolima/gestao_vagas .
+      - name: Publish imagem
+        run: docker push guilhermemelolima/gestao_vagas
